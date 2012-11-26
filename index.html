@@ -70,6 +70,7 @@
 "status": "ok",
 "data": {
 "extra": {...},
+"unistorage_type": "image",
 "mimetype": "image/jpeg",
 "name": "some.jpeg",
 "size": 211258,
@@ -79,7 +80,7 @@
 }
 </code></pre>
 
-<p><code>mimetype</code>: MIME-тип файла, вычисленный сервисом;<br><code>name</code>: имя файла;<br><code>size</code>: размер файла в байтах;<br><code>url</code>: URL, по которому можно получить бинарное содержимое файла;<br><code>extra</code>: словарь, содержащий некоторые метаданные о файле, поля варьируются в зависимости от типа файла.</p>
+<p><code>mimetype</code>: MIME-тип файла, вычисленный сервисом;<br><code>unistorage_type</code>: тип файла в терминах Unistorage (<code>image</code>, <code>video</code>, <code>audio</code>, <code>doc</code> или <code>unknown</code>);<br><code>name</code>: имя файла;<br><code>size</code>: размер файла в байтах;<br><code>url</code>: URL, по которому можно получить бинарное содержимое файла;<br><code>extra</code>: словарь, содержащий некоторые метаданные о файле, поля варьируются в зависимости от типа файла.</p>
 
 <table>
 <tr>
@@ -92,7 +93,9 @@
 </tr>
 <tr>
 <td>Видео</td>
-<td>width, height, codec, length (длина в секундах)</td>
+<td>Словарь `video` с полями `width`, `height`, `codec`, `duration`, `bitrate`, `fps`;
+словарь `audio` с полями `sample_rate`, `codec`, `bitrate`, `duration`.
+</td>
 </tr>
 <tr>
 <td>Аудио</td>
