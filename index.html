@@ -27,28 +27,33 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <h2>О проекте</h2>
+        <h2>
+<a name="-" class="anchor" href="#-"><span class="octicon octicon-link"></span></a>О проекте</h2>
 
 <p>Unistorage — платформа для хранения и раздачи по HTTP произвольного количества и размера файлов, а также манипуляций и преобразования некоторых типов контента.</p>
 
 <p>Основной упор мы делаем на простоту сервиса, скорость работы, а так же максимальное покрытие паттернов работы с типовым контентом: модификация и конвертация в различные форматы изображений и видео, манипуляции с файлами офисных пакетов, и прочее.</p>
 
-<h2>История возникновения</h2>
+<h2>
+<a name="--1" class="anchor" href="#--1"><span class="octicon octicon-link"></span></a>История возникновения</h2>
 
 <p>Изначально платформа разрабатывалась для нужд проектов холдинга 66.ru, но со временем мы поняли, что получающийся продукт достоен того, чтобы показать его за пределами нашей группы разработчиков. Мы уверены, что платформа найдет применение в самых разных проектах.</p>
 
 <p>В данный момент платформа находится в режиме ограниченного тестирования, чтобы получить доступ — обратитесь, пожалуйста, с запросом по e-mail <a href="mailto:ramm@66.ru">ramm@66.ru</a></p>
 
-<h2>Введение</h2>
+<h2>
+<a name="" class="anchor" href="#"><span class="octicon octicon-link"></span></a>Введение</h2>
 
 <p>Сервис имеет RESTful HTTP API, предоставляющий средства для работы с файлами (загрузка, хранение, применение операций, получение информации о файле).<br>
 Все запросы к API должны включать в себя HTTP-заголовок <code>Token</code>, содержащий токен доступа к сервису (строка, удовлетворяющая шаблону <code>[A-z0-9]{32}</code>).<br>
 Ответы API имеют тип <code>application/json</code> и являются JSON-словарём. В ответе всегда присутствует статус (поле <code>status</code>). Если запрос прошёл неуспешно, ответ содержит статус <code>"error"</code>, а также сообщение об ошибке в поле <code>msg</code>.<br>
 Некоторые ответы содержат поле <code>ttl</code>, которое следует трактовать как количество секунд, по истечении которого данные ответа перестанут быть актуальными и должны быть запрошены заново.</p>
 
-<h2>Загрузка и получение информации о файлах</h2>
+<h2>
+<a name="-----" class="anchor" href="#-----"><span class="octicon octicon-link"></span></a>Загрузка и получение информации о файлах</h2>
 
-<h3>Загрузка файла</h3>
+<h3>
+<a name="--2" class="anchor" href="#--2"><span class="octicon octicon-link"></span></a>Загрузка файла</h3>
 
 <p><strong>Endpoint</strong>: <code>/</code><br><strong>Тип запроса</strong>: <code>POST multipart/form-data</code><br><strong>Поля запроса</strong>:</p>
 
@@ -70,7 +75,8 @@
 
 <p>Пример загрузки файла с помощью curl: <code>curl --form type_id=42qwe --form file=@&lt;path-to-file&gt; --header "Token: 01234567890123456789012345678901" localhost:5000</code>.</p>
 
-<h3>Получение данных о файле</h3>
+<h3>
+<a name="---" class="anchor" href="#---"><span class="octicon octicon-link"></span></a>Получение данных о файле</h3>
 
 <p><strong>Endpoint</strong>: <code>resource_uri</code>, имеющий вид <code>/&lt;id&gt;/</code><br><strong>Тип запроса</strong>: <code>GET</code><br><strong>Поля запроса</strong>: отсутствуют<br><strong>Формат ответа</strong>: </p>
 
@@ -136,11 +142,13 @@
 }
 </code></pre>
 </li>
-</ol><h2>Операции над файлами</h2>
+</ol><h2>
+<a name="--" class="anchor" href="#--"><span class="octicon octicon-link"></span></a>Операции над файлами</h2>
 
 <p>Сервис предоставляет возможность производить операции над файлами. Операция характеризуется именем и типом файлов, к которым она применима.</p>
 
-<h3>Применение операции к файлу</h3>
+<h3>
+<a name="----1" class="anchor" href="#----1"><span class="octicon octicon-link"></span></a>Применение операции к файлу</h3>
 
 <p><strong>Endpoint</strong>: <code>/&lt;id&gt;/</code><br><strong>Тип запроса</strong>: <code>GET</code><br><strong>Поля запроса</strong>:</p>
 
@@ -148,7 +156,9 @@
 <li>
 <code>action</code>: имя операции</li>
 <li>аргументы операции</li>
-</ul><p><strong>Формат ответа</strong>:  </p>
+</ul><p>Также, если запрос содержит переменную <code>with_low_priority</code> (возможно, без значения), операция будет исполнена с низким приоритетом.</p>
+
+<p><strong>Формат ответа</strong>:  </p>
 
 <pre><code>{
   "status": "ok",
@@ -158,19 +168,28 @@
 
 <p>Ответ со статусом <code>"ok"</code> означает, что операция поставлена в очередь и будет выполнена в ближайшем будущем, а её результат будет доступен по адресу <code>resource_uri</code>.  </p>
 
-<p>Пример запроса с помощью curl:</p>
+<p>Примеры запроса с помощью curl:</p>
 
 <pre><code>curl --header "Token: 01234567890123456789012345678901" \
     http://localhost/503dd7c48149954c99f41a29/?action=resize&amp;mode=crop&amp;w=100&amp;h=50.
 </code></pre>
 
-<h3>Список доступных операций</h3>
+<p>Пример запроса операции с низким приоритетом:</p>
 
-<h4>Операции, применимые к изображениям</h4>
+<pre><code>curl --header "Token: 01234567890123456789012345678901" \
+    http://localhost/503dd7c48149954c99f41a29/?action=resize&amp;mode=crop&amp;w=100&amp;h=50.&amp;with_low_priority
+</code></pre>
+
+<h3>
+<a name="---1" class="anchor" href="#---1"><span class="octicon octicon-link"></span></a>Список доступных операций</h3>
+
+<h4>
+<a name="----2" class="anchor" href="#----2"><span class="octicon octicon-link"></span></a>Операции, применимые к изображениям</h4>
 
 <p>Изображением считается файл, MIME-тип которого начинается со строки <code>"image/"</code>.</p>
 
-<h5>Конвертация в другой формат</h5>
+<h5>
+<a name="----3" class="anchor" href="#----3"><span class="octicon octicon-link"></span></a>Конвертация в другой формат</h5>
 
 <p>Имя операции: <code>convert</code><br>
 Аргументы:  </p>
@@ -178,7 +197,8 @@
 <ul>
 <li>
 <code>to</code>: bmp, gif, jpeg, png, tiff</li>
-</ul><h5>Изменение размера</h5>
+</ul><h5>
+<a name="--3" class="anchor" href="#--3"><span class="octicon octicon-link"></span></a>Изменение размера</h5>
 
 <p>Имя операции: <code>resize</code><br>
 Аргументы:  </p>
@@ -191,7 +211,8 @@
 <li>
 <p><code>mode</code>: keep, crop, resize</p>
 
-<h6>keep</h6>
+<h6>
+<a name="keep" class="anchor" href="#keep"><span class="octicon octicon-link"></span></a>keep</h6>
 
 <p>Изображение ресайзится с сохранением пропорций так, чтобы выполнялось одно из условий:</p>
 
@@ -201,7 +222,8 @@
 </ul>
 <p>Можно указывать только одно из измерений.</p>
 
-<h6>crop</h6>
+<h6>
+<a name="crop" class="anchor" href="#crop"><span class="octicon octicon-link"></span></a>crop</h6>
 
 <ol>
 <li>Изображение ресайзится с сохранением пропорций так, чтобы выполнялось одно из условий:
@@ -213,16 +235,19 @@
 </li>
 <li>Из середины полученного изображения вырезается прямоугольник размером w×h.</li>
 </ol>
-<h6>resize</h6>
+<h6>
+<a name="resize" class="anchor" href="#resize"><span class="octicon octicon-link"></span></a>resize</h6>
 
 <p>Изображение ресайзится до размера на w×h без сохрания пропорций.</p>
 </li>
-</ul><h5>Приведение к черно-белому формату</h5>
+</ul><h5>
+<a name="----" class="anchor" href="#----"><span class="octicon octicon-link"></span></a>Приведение к черно-белому формату</h5>
 
 <p>Имя операции: <code>grayscale</code><br>
 Аргументы: отсутствуют</p>
 
-<h5>Поворот</h5>
+<h5>
+<a name="-1" class="anchor" href="#-1"><span class="octicon octicon-link"></span></a>Поворот</h5>
 
 <p>Имя операции: <code>rotate</code><br>
 Аргументы:</p>
@@ -230,11 +255,13 @@
 <ul>
 <li>
 <code>angle</code>: угол поворота (считается против часовой стрелки), допустимые значения: 90, 180, 270</li>
-</ul><hr><h4>Операции, применимые к видео</h4>
+</ul><hr><h4>
+<a name="----4" class="anchor" href="#----4"><span class="octicon octicon-link"></span></a>Операции, применимые к видео</h4>
 
 <p>Видеофайлом считается файл, MIME-тип которого начинается со строки <code>"video/"</code>. Также видеофайлом считается <code>"application/ogg"</code>, имеющий не только аудио-поток.</p>
 
-<h5>Конвертация в другой формат/перекодирование</h5>
+<h5>
+<a name="----5" class="anchor" href="#----5"><span class="octicon octicon-link"></span></a>Конвертация в другой формат/перекодирование</h5>
 
 <p>Имя операции: <code>convert</code><br>
 Аргументы:  </p>
@@ -275,7 +302,8 @@
 </table><p>Конвертировать в ogg и webm можно использовать без указания кодеков:
 <code>?action=convert&amp;to=(ogg|webm)</code></p>
 
-<h5>Извлечение аудио-потока</h5>
+<h5>
+<a name="---2" class="anchor" href="#---2"><span class="octicon octicon-link"></span></a>Извлечение аудио-потока</h5>
 
 <p>Имя операции: <code>extract_audio</code><br>
 Аргументы:  </p>
@@ -283,7 +311,8 @@
 <ul>
 <li>
 <code>to</code>: alac, aac, vorbis, ac3, mp3, flac</li>
-</ul><h5>Захват кадра из видео</h5>
+</ul><h5>
+<a name="----6" class="anchor" href="#----6"><span class="octicon octicon-link"></span></a>Захват кадра из видео</h5>
 
 <p>Имя операции: <code>capture_frame</code><br>
 Аргументы:  </p>
@@ -293,11 +322,13 @@
 <code>to</code>: bmp, gif, jpeg, png, tiff</li>
 <li>
 <code>position</code>: какой кадр захватить -- количество секунд от начала видео</li>
-</ul><hr><h4>Операции, применимые к аудио</h4>
+</ul><hr><h4>
+<a name="----7" class="anchor" href="#----7"><span class="octicon octicon-link"></span></a>Операции, применимые к аудио</h4>
 
 <p>Аудиофайлом считается файл, MIME-тип которого начинается со строки <code>"audio/"</code>. Также аудиофайлом считается <code>"application/ogg"</code>, имеющий только аудио-поток.</p>
 
-<h5>Перекодирование</h5>
+<h5>
+<a name="-2" class="anchor" href="#-2"><span class="octicon octicon-link"></span></a>Перекодирование</h5>
 
 <p>Имя операции: <code>convert</code><br>
 Аргументы:  </p>
@@ -305,9 +336,11 @@
 <ul>
 <li>
 <code>to</code>: alac, aac, vorbis, ac3, mp3, flac</li>
-</ul><hr><h4>Операции, применимые и к изображениям, и к видео</h4>
+</ul><hr><h4>
+<a name="-------" class="anchor" href="#-------"><span class="octicon octicon-link"></span></a>Операции, применимые и к изображениям, и к видео</h4>
 
-<h5>Наложение ватермарка</h5>
+<h5>
+<a name="--4" class="anchor" href="#--4"><span class="octicon octicon-link"></span></a>Наложение ватермарка</h5>
 
 <p>Имя операции: <code>watermark</code><br>
 Аргументы:  </p>
@@ -324,7 +357,8 @@
 </li>
 </ul><p>Значения <code>w</code>, <code>h</code>, <code>w_pad</code>, <code>h_pad</code> могут быть указаны как в процентах от картинки, на которую накладывается ватермарк, так и в пикселях. <code>w=25</code>, например, считается процентами, а <code>w=25px</code> -- пикселями.</p>
 
-<hr><h4>Операции, применимые к документам</h4>
+<hr><h4>
+<a name="----8" class="anchor" href="#----8"><span class="octicon octicon-link"></span></a>Операции, применимые к документам</h4>
 
 <p>Документом считается файл, чей MIME-тип принадлежит следующему списку:  </p>
 
@@ -341,7 +375,8 @@
 "text/html"
 </code></pre>
 
-<h5>Конвертация в другой формат</h5>
+<h5>
+<a name="----9" class="anchor" href="#----9"><span class="octicon octicon-link"></span></a>Конвертация в другой формат</h5>
 
 <p>Имя операции: <code>convert</code><br>
 Аргументы:  </p>
@@ -349,12 +384,14 @@
 <ul>
 <li>
 <code>to</code>: doc, docx, odt, pdf, rtf, txt, html</li>
-</ul><h2>Шаблоны</h2>
+</ul><h2>
+<a name="-3" class="anchor" href="#-3"><span class="octicon octicon-link"></span></a>Шаблоны</h2>
 
 <p>Шаблон -- упорядоченный набор совместимых операций и их аргументов. Под совместимостью подразумевается возможность каждую последующую операцию применить к результату предыдущей.<br>
 Сервис предоставляет возможность создавать шаблоны и применять их к файлам из хранилища.</p>
 
-<h3>Создание шаблона</h3>
+<h3>
+<a name="--5" class="anchor" href="#--5"><span class="octicon octicon-link"></span></a>Создание шаблона</h3>
 
 <p><strong>Endpoint</strong>: <code>/template/</code><br><strong>Тип запроса</strong>: <code>POST multipart/form-data</code><br><strong>Поля запроса</strong>:</p>
 
@@ -381,7 +418,8 @@ action[]: action=resize&amp;mode=keep&amp;w=50&amp;h=50
 action[]: action=grayscale
 </code></pre>
 
-<h3>Получение данных о шаблоне</h3>
+<h3>
+<a name="----10" class="anchor" href="#----10"><span class="octicon octicon-link"></span></a>Получение данных о шаблоне</h3>
 
 <p><strong>Endpoint</strong>: <code>resource_uri</code>, имеющий вид <code>/template/&lt;id&gt;/</code><br><strong>Тип запроса</strong>: <code>GET</code><br><strong>Поля запроса</strong>: отсутствуют<br><strong>Формат ответа</strong>: </p>
 
@@ -399,7 +437,8 @@ action[]: action=grayscale
 
 <p>Note: ответ не имеет поля <code>ttl</code>.</p>
 
-<h3>Применение шаблона</h3>
+<h3>
+<a name="--6" class="anchor" href="#--6"><span class="octicon octicon-link"></span></a>Применение шаблона</h3>
 
 <p><strong>Endpoint</strong>: <code>/&lt;id&gt;/</code><br><strong>Тип запроса</strong>: <code>GET</code><br><strong>Поля запроса</strong>:</p>
 
@@ -416,11 +455,13 @@ action[]: action=grayscale
 
 <p>Ответ со статусом <code>"ok"</code> означает, что применение шаблона <code>template</code> к файлу с идентификатором <code>&lt;id&gt;</code> поставлено в очередь, и результат будет доступен по адресу <code>resource_uri</code></p>
 
-<h2>Архивирование файлов</h2>
+<h2>
+<a name="--7" class="anchor" href="#--7"><span class="octicon octicon-link"></span></a>Архивирование файлов</h2>
 
 <p>Сервис предоставляет возможность создавать ZIP-архивы. Созданные архивы не являются обычными файлами с точки зрения API, так как имеют ограниченный срок жизни. Также к ним нельзя применять никаких последующих операций.</p>
 
-<h3>Создание ZIP-архива</h3>
+<h3>
+<a name="-zip-" class="anchor" href="#-zip-"><span class="octicon octicon-link"></span></a>Создание ZIP-архива</h3>
 
 <p><strong>Endpoint</strong>: <code>/zip/</code><br><strong>Тип запроса</strong>: <code>POST multipart/form-data</code><br><strong>Поля запроса</strong>:</p>
 
@@ -439,7 +480,8 @@ action[]: action=grayscale
 
 <p><code>resource_uri</code> содержит относительный URI созданного архива, указывающий на endpoint <code>/zip/</code>.</p>
 
-<h3>Получение данных о ZIP-архиве</h3>
+<h3>
+<a name="---zip-" class="anchor" href="#---zip-"><span class="octicon octicon-link"></span></a>Получение данных о ZIP-архиве</h3>
 
 <p><strong>Endpoint</strong>: <code>resource_uri</code>, имеющий вид <code>/zip/&lt;id&gt;</code><br><strong>Тип запроса</strong>: <code>GET</code><br><strong>Поля запроса</strong>: отсутствуют<br><strong>Формат ответа</strong>:  </p>
 
