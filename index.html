@@ -87,12 +87,12 @@
 <pre><code>{
 "status": "ok",
 "data": {
-"extra": {...},
-"unistorage_type": "image",
-"mimetype": "image/jpeg",
-"name": "some.jpeg",
-"size": 211258,
-"url": "http://127.0.0.1/503dd7c48149954c99f41a29"
+  "extra": {...},
+  "unistorage_type": "image",
+  "mimetype": "image/jpeg",
+  "name": "some.jpeg",
+  "size": 211258,
+  "url": "http://127.0.0.1/503dd7c48149954c99f41a29"
 },
 "ttl": 604800
 }
@@ -107,17 +107,17 @@
 </tr>
 <tr>
 <td>Изображение</td>
-<td>width, height, orientation (в терминах EXIF -- число от 1 до 8) </td>
+  <td>width, height, orientation (в терминах EXIF -- число от 1 до 8) </td>
 </tr>
 <tr>
 <td>Видео</td>
-<td>Словарь `video` с полями `width`, `height`, `codec`, `duration`, `bitrate`, `fps`;
+  <td>Словарь `video` с полями `width`, `height`, `codec`, `duration`, `bitrate`, `fps`;
 словарь `audio` с полями `channels`, `duration`, `codec`, `sample_rate`, `bitrate`.
 </td>
 </tr>
 <tr>
 <td>Аудио</td>
-<td>`format` (например, 'mp3'), `channels` (количество каналов), `codec`, `sample_rate`, `duration`, `bitrate` (например, '128k')</td>
+  <td>`format` (например, 'mp3'), `channels` (количество каналов), `codec`, `sample_rate`, `duration`, `bitrate` (например, '128k')</td>
 </tr>
 </table>
 </li>
@@ -127,7 +127,7 @@
 <pre><code>{
 "status": "just_uri",
 "data": {
-"url": "http://127.0.0.1/503dd7c48149954c99f41a29"
+  "url": "http://127.0.0.1/503dd7c48149954c99f41a29"
 },
 "ttl": 15
 }
@@ -255,7 +255,28 @@
 <ul>
 <li>
 <code>angle</code>: угол поворота (считается против часовой стрелки), допустимые значения: 90, 180, 270</li>
-</ul><hr><h4>
+</ul><h5>
+<a name="%D0%9A%D1%80%D0%BE%D0%BF" class="anchor" href="#%D0%9A%D1%80%D0%BE%D0%BF"><span class="octicon octicon-link"></span></a>Кроп</h5>
+
+<p>Имя операции: <code>crop</code><br>
+Аргументы:</p>
+
+<ul>
+<li>
+<code>x1</code>,</li>
+<li>
+<code>y1</code>: координаты верхнего левого угла;</li>
+<li>
+<code>x2</code>,</li>
+<li>
+<code>y2</code>: координаты нижнего правого угла.</li>
+</ul><p>Верхний левый угол исходного изображения имеет координаты <code>(0, 0)</code>.
+Точки <code>(x1, y1)</code> и <code>(x2, y2)</code> будут включены в результирующее изображение, то есть,
+должны выполняться следующие условия: <code>0 &lt; x &lt;= width - 1</code>, <code>0 &lt; y &lt;= height - 1</code>.
+Соответственно, результирующее изображение будет иметь ширину <code>x2 - x1 + 1</code>
+и высоту <code>y2 - y1 + 1</code>.</p>
+
+<hr><h4>
 <a name="%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%B8-%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D0%BD%D0%B8%D0%BC%D1%8B%D0%B5-%D0%BA-%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE" class="anchor" href="#%D0%9E%D0%BF%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D0%B8-%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D0%BD%D0%B8%D0%BC%D1%8B%D0%B5-%D0%BA-%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE"><span class="octicon octicon-link"></span></a>Операции, применимые к видео</h4>
 
 <p>Видеофайлом считается файл, MIME-тип которого начинается со строки <code>"video/"</code>. Также видеофайлом считается <code>"application/ogg"</code>, имеющий не только аудио-поток.</p>
